@@ -1,0 +1,7 @@
+# ignore all files in the node_modules and dist folders in the subdirectories
+**/node_modules/
+**/dist/
+
+# ignore all files in the .env file
+.env
+**/.env
