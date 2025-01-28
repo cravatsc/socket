@@ -7,7 +7,7 @@ import { Message } from '@/lib/types';
 
 const Home = () => {
   const [isConnected, setIsConnected] = useState(false);
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [username, setUsername] = useState('');
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -36,7 +36,7 @@ const Home = () => {
     });
 
     socket.on('message', (data: Message) => {
-      setMessages(prev => [...prev, data.username + ': ' + data.message]);
+      setMessages(prev => [...prev, data]);
       console.log('Received message from ', data.username, ':', data.message);
     });
 
@@ -99,8 +99,8 @@ const Home = () => {
               <p className="text-gray-500">No messages yet</p>
             ) : (
               messages.map((msg, index) => (
-                <div key={index} className="p-2 bg-gray-100 rounded-md text-gray-700">
-                  {msg}
+                <div key={index} className={`p-2 rounded-md text-gray-700 ${msg.username === username ? 'bg-green-100' : 'bg-gray-100'}`}>
+                  <span className="font-bold">{msg.username}:</span> {msg.message}
                 </div>
               ))
             )}
