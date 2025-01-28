@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 interface SigninProps {
   username: string;
   setUsername: (username: string) => void;
