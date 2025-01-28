@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { initSocket, getSocket } from '@/lib/socket';
 import Signin from './components/signin';
+import { Message } from '@/lib/types';
 
 const Home = () => {
   const [isConnected, setIsConnected] = useState(false);
@@ -34,9 +35,9 @@ const Home = () => {
       setIsConnected(false);
     });
 
-    socket.on('message', (data: string) => {
-      setMessages(prev => [...prev, data]);
-      console.log('Received message:', data);
+    socket.on('message', (data: Message) => {
+      setMessages(prev => [...prev, data.username + ': ' + data.message]);
+      console.log('Received message from ', data.username, ':', data.message);
     });
 
     return () => {
@@ -50,7 +51,7 @@ const Home = () => {
   const sendMessage = () => {
     try {
       const socket = getSocket();
-      socket.emit('sendMessage', inputMessage);
+      socket.emit('sendMessage', { username: username, message: inputMessage });
       setInputMessage(''); // Clear input after sending
     } catch (error) {
       console.error('Error sending message:', error);

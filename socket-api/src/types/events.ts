@@ -1,7 +1,12 @@
+export interface Message {
+  username: string;
+  message: string;
+}
+
 interface ServerToClientEvents {
-  message: (data: string) => void;
+  message: (data: Message) => void;
 }
 
 interface ClientToServerEvents {
-  sendMessage: (data: string) => void;
+  sendMessage: (data: Message) => void;
 }

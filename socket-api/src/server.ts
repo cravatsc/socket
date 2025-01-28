@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
+import { Message } from "./types/events";
 
 const app: Express = express();
 const server = createServer(app);
@@ -19,8 +20,8 @@ io.on('connection', (socket) => {
   console.log('a user connected');
   console.log('socket:', socket);
 
-  socket.on('sendMessage', (data: string) => {
-    console.log('message received:', data);
+  socket.on('sendMessage', (data: Message) => {
+    console.log('message received from ', data.username, ':', data.message);
     io.emit('message', data);
   });
 
